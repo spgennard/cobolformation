@@ -12,8 +12,8 @@
        PROCEDURE DIVISION USING ARG1 ARG2 Arg4 Arg5 Arg6.
        MOVE "Replaced in COBOL" TO ARG2
 
-       add 100 to Arg4.
-       add 100 to Arg5.
-       subtract 100 from Arg6.
+       add 100.0 to Arg4.
+       subtract 100.0 from Arg5.
+       add 100 to Arg6.
 
        EXIT PROGRAM.
