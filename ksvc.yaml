@@ -6,4 +6,4 @@ spec:
   template:
     spec:
       containers:
-        - image: gcr.io/fit-stream-305821/cobolformation 
+        - image: docker.io/mattray/cobolformation:latest
