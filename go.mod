@@ -1,4 +1,4 @@
-module github.com/triggermesh/misc/projects/2021.COBOL.POC/cobolformation
+module github.com/triggermesh/cobolformation
 
 go 1.16
 
