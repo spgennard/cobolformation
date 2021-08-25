@@ -6,11 +6,11 @@ COBOLFormation is a Golang wrapper for COBOL applications, allowing them to run 
 
 The [handler.go](handler.go) takes a CloudEvent’s data payload and uses it as the arguments for the wrapped [datatype.cob](datatype.cob).
 The example [datatype.cob](datatype.cob) COBOL program takes the passed arguments as variables and does a few trivial operations to the data.
-    * A message is added to the first argument
-    * The second argument is replaced
-    * 100 is added to the third argument (float)
-    * 100 is subtracted from the fourth argument (double)
-    * 100 is added to the fifth argument (integer)
+* A message is added to the first argument
+* The second argument is replaced
+* 100 is added to the third argument (float)
+* 100 is subtracted from the fourth argument (double)
+* 100 is added to the fifth argument (integer)
 
 It should be fairly straightforward to upgrade the wrapper and the COBOL application for your own usage.
 
