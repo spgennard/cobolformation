@@ -2,6 +2,8 @@
 
 COBOLFormation is a Golang wrapper for COBOL applications, allowing them to run within Knative as a serverless application.
 
+There is a blog and video walk through here: https://www.triggermesh.com/blog/serverless-cobol-in-knative
+
 ## How it Works
 
 The [handler.go](handler.go) takes a CloudEvent’s data payload and uses it as the arguments for the wrapped [datatype.cob](datatype.cob).
