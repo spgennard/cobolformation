@@ -1,29 +1,21 @@
-FROM golang:1.17rc2-alpine3.13 as builder
-
-RUN apk update 
-ENV GNUCOBOL_VERSION="2.2"
-RUN set -ex \
-    && apk add --no-cache --virtual .build-deps curl \
-    && apk add --no-cache --virtual .gnucobol-deps build-base gcc binutils \
-    && apk add --no-cache gettext-dev gmp-dev db-dev ncurses-dev \
-    && export WORKDIR=$(mktemp -d) \
-    && cd "${WORKDIR}" \
-    && curl -L -o "gnucobol-${GNUCOBOL_VERSION}.tar.gz" "https://sourceforge.net/projects/open-cobol/files/gnu-cobol/${GNUCOBOL_VERSION}/gnucobol-${GNUCOBOL_VERSION}.tar.gz" \
-    && tar xzvf "gnucobol-${GNUCOBOL_VERSION}.tar.gz" \
-    && cd "gnucobol-${GNUCOBOL_VERSION}/" \
-    && ./configure \
-    && make \
-    && make install \
-    && cd \
-    && rm -R "${WORKDIR}" \
-    && apk del .build-deps \
-    && cobc -V \
-    && apk add musl-dev
+FROM microfocus/entdevhub:ubuntu20.04_7.0_x64 as cbl-builder
 
 WORKDIR /cobol
+COPY . /cobol
 
-COPY . .
+RUN . ${MFPRODBASE}/bin/cobsetenv && \
+    make cobol
 
-RUN make build
+FROM golang:1.17rc2-alpine3.13 as go-builder
+WORKDIR /cobol
+COPY . /cobol
+RUN apk add build-base gcc binutils && \
+    make cobolformation
+
+FROM microfocus/cobolserver:ubuntu20.04_7.0_x64
+
+WORKDIR /cobol
+COPY --from=go-builder /cobol/cobolformation /cobol/
+COPY --from=cbl-builder /cobol/datatype.so /cobol/
 
 ENTRYPOINT [ "/cobol/cobolformation" ]

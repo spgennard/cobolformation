@@ -1,11 +1,16 @@
-build:
-	rm -rf *.o && rm -rf libgbc.a && \
-	cobc -c -static *.cob && ar q libgbc.a *.o && go build . 
-	
+all: build
 
-run: 
-	rm -rf *.o && rm -rf libgbc.a && \
-	cobc -c -static *.cob && ar q libgbc.a *.o && go run .
+cobolformation:
+	go build . 
+
+cobol:
+	cob -yU -o datatype.so -e "" *.cob
+
+build: clean cobol cobolformation
+	echo Complete	
+
+run: build
+	go run .
 
 make clean:
-	rm -rf *.o && rm -rf libgbc.a && rm -rf cobolformation
+	rm -f *.o cobolformation datatype.so
