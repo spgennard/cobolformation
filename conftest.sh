@@ -1,0 +1,1 @@
+curl -D- localhost:8080     -H 'Content-Type: application/json'     -H 'Ce-Specversion: 1.0'     -H 'Ce-Type: greeting'     -H 'Ce-Source: my-workstation'     -H 'Ce-Id: 0000'     -d '{ "arg1": "hello,", "arg2": "replace me", "arg3":123.45, "arg4":234.5678,"arg5":3 }'
