@@ -12,5 +12,8 @@ build: clean cobol cobolformation
 run: build
 	go run .
 
+docker:
+	docker build -t mfcobol/cobolformation .
+
 make clean:
 	rm -f *.o cobolformation datatype.so

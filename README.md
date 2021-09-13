@@ -21,6 +21,12 @@ If you are using COBOL "PIC X(n)" as a receiving parameter, ensure the go code r
 
 As COBOL PIC X(n) data fields often include a lot of unrequired spaces, the use of strings.TrimRight is your friend.
 
+## Signal handling
+
+The Micro Focus COBOL runtime by default installs a signal handler and so does the go runtime.  
+
+By using a cobconfig file & the environment variable COBCONFIG the SIGINT signal handler is turned off and a SEGSEGV when CTRL-C is used is avoided.
+
 ## Building and Deploying
 
 Build the docker image with your tag of choice:
@@ -28,6 +34,12 @@ Build the docker image with your tag of choice:
     docker build -t mfcobol/cobolformation .
 
 Push to your preferred container registry and update the [ksvc.yaml](ksvc.yaml) with the appropriate image location.
+
+## Testing the built image before deployment
+
+You can do this by executing the following docker run command:
+
+    docker run --expose 8080 -p 8080:8080 -ti mfcobol/cobolformation
 
 ### Deploy to Knative as KSVC
 

@@ -23,4 +23,9 @@ FROM microfocus/cobolserver:ubuntu20.04_7.0_x64
 WORKDIR /cobol
 COPY --from=go-builder /cobol/cobolformation /cobol/
 COPY --from=cbl-builder /cobol/datatype.so /cobol/
-ENTRYPOINT [ "/cobol/cobolformation" ]
+COPY --from=cbl-builder /cobol/cobconfig /cobol/
+
+ENV LD_LIBRARY_PATH=/cobol:${LD_LIBRARY_PATH}
+ENV COBCONFIG=/cobol/cobconfig
+ENTRYPOINT . ${MFPRODBASE}/bin/cobsetenv && \
+            "/cobol/cobolformation" ]

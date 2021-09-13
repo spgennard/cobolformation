@@ -31,20 +31,28 @@ import (
 #cgo CFLAGS: -I.-fpic
 #cgo LDFLAGS: -L. -L/usr/lib -ldl
 #include <dlfcn.h>
+#include <stdio.h>
 
 int datatype2(char *arg1, char *arg2,float *arg3,double *arg4, signed int *arg5) {
 	int (*datatype_pp)(char *arg1, char *arg2,float *arg3,double *arg4, signed int *arg5);
-	int ret;
+	int ret=-1;
 
 	void *handle = dlopen("datatype.so", RTLD_GLOBAL | RTLD_NOW);
+	if (handle == 0) {
+		printf("FAILED to load datatype.so\n");
+		printf(" REASON: %s\n",dlerror());
+		return ret;
+	}
 
-	//todo - error handling... & dlerror reset
 	datatype_pp = dlsym(handle,"datatype");
 
-	ret = datatype_pp(arg1,arg2,arg3,arg4,arg5);
-
-	dlclose(handle);
-
+	if (datatype_pp != 0) {
+		ret = datatype_pp(arg1,arg2,arg3,arg4,arg5);
+		dlclose(handle);
+	} else {
+		printf("FAILED to find datatype\n");
+		printf(" REASON: %s\n",dlerror());
+	}
 	return ret;
 }
 */
