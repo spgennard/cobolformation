@@ -10,7 +10,6 @@
        01 Arg4 USAGE COMP-2.
        01 Arg5 BINARY-SHORT SIGNED.
        PROCEDURE DIVISION USING ARG1 ARG2 Arg3 Arg4 Arg5.
-           MOVE z"Hi From Arg1" TO ARG1
            MOVE z"Replaced in MFCOBOL" TO ARG2
     
            add 100.0 to Arg3.

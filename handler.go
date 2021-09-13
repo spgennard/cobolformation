@@ -132,7 +132,7 @@ func processEvent(e cloudevents.Event) (interface{} /*result*/, error) {
 
 	res := &result{
 		Message: "event processed successfully: [" +
-			C.GoString(arg1) + "," +
+			strings.TrimRight(C.GoString(arg1), " ") +
 			C.GoString(arg2) + "]",
 		Arg3:           float64(arg3),
 		Arg4:           float64(arg4),

@@ -1,8 +1,6 @@
-#
+# GOLANG and COBOL
 
 COBOLFormation is a Golang wrapper for COBOL applications, allowing them to run within Knative as a serverless application.
-
-There is a blog and video walk through here: https://www.triggermesh.com/blog/serverless-cobol-in-knative
 
 ## How it Works
 
@@ -19,7 +17,9 @@ It should be fairly straightforward to upgrade the wrapper and the COBOL applica
 
 ## COBOL Datatypes
 
-TIP: If you are using COBOL "PIC X(n)" as a receiving parameter, ensure the go code reserves enough space for the parameter otherwise stack corruption will occur.
+If you are using COBOL "PIC X(n)" as a receiving parameter, ensure the go code reserves enough space for the parameter otherwise stack corruption will occur.
+
+As COBOL PIC X(n) data fields often include a lot of unrequired spaces, the use of strings.TrimRight is your friend.
 
 ## Building and Deploying
 
@@ -58,19 +58,19 @@ You should get an example response similar to:
 
 ```http
 HTTP/1.1 200 OK
-Ce-Id: b28011a5-bde3-4ca3-976e-ddbc2a869148
+Ce-Id: e19a2bb0-88a2-450c-b6e5-3d12ca9a2be5
 Ce-Processedid: 0000
 Ce-Processedsource: my-workstation
 Ce-Processedtype: greeting
 Ce-Source: io.triggermesh.targets.mfcobol-sample
 Ce-Specversion: 1.0
-Ce-Time: 2021-09-13T10:07:25.631726589Z
+Ce-Time: 2021-09-13T10:26:54.906317879Z
 Ce-Type: com.example.target.ack
-Content-Length: 174
+Content-Length: 167
 Content-Type: application/json
-Date: Mon, 13 Sep 2021 10:07:25 GMT
+Date: Mon, 13 Sep 2021 10:26:54 GMT
 
-{"code":0,"detail":{"message":"event processed successfully: [Hi From Arg1,Replaced in MFCOBOL]","arg3":223.4499969482422,"arg4":134.5678,"arg5":103,"processing_time_ms":24}
+{"code":0,"detail":{"message":"event processed successfully: [hello,Replaced in MFCOBOL]","arg3":223.4499969482422,"arg4":134.5678,"arg5":103,"processing_time_ms":25}}
 ```
 
 The output could be cleaned up in the wrapper as necessary.
