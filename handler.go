@@ -21,8 +21,8 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"time"
 	"strings"
+	"time"
 
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 )
@@ -37,7 +37,7 @@ int datatype2(char *arg1, char *arg2,float *arg3,double *arg4, signed int *arg5)
 	int ret;
 
 	void *handle = dlopen("datatype.so", RTLD_GLOBAL | RTLD_NOW);
-	
+
 	//todo - error handling... & dlerror reset
 	datatype_pp = dlsym(handle,"datatype");
 
@@ -122,8 +122,8 @@ func processEvent(e cloudevents.Event) (interface{} /*result*/, error) {
 
 	// C.cob_init(0, nil)
 
-	arg1 := C.CString(r.Arg1+strings.Repeat(" ",24))
-	arg2 := C.CString(r.Arg2+strings.Repeat(" ",24))
+	arg1 := C.CString(r.Arg1 + strings.Repeat(" ", 24))
+	arg2 := C.CString(r.Arg2 + strings.Repeat(" ", 24))
 	arg3 := C.float(r.Arg3)
 	arg4 := C.double(r.Arg4)
 	arg5 := C.int(r.Arg5)
@@ -131,7 +131,9 @@ func processEvent(e cloudevents.Event) (interface{} /*result*/, error) {
 	C.datatype2(arg1, arg2, &arg3, &arg4, &arg5)
 
 	res := &result{
-		Message:        "event processed successfully:" + C.GoString(arg1) + " " + C.GoString(arg2),
+		Message: "event processed successfully: [" +
+			C.GoString(arg1) + "," +
+			C.GoString(arg2) + "]",
 		Arg3:           float64(arg3),
 		Arg4:           float64(arg4),
 		Arg5:           int(arg5),

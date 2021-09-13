@@ -6,4 +6,4 @@ spec:
   template:
     spec:
       containers:
-        - image: docker.io/mattray/cobolformation:latest
+        - image: docker.io/mfcobol/cobolformation:latest

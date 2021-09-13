@@ -8,6 +8,7 @@ There is a blog and video walk through here: https://www.triggermesh.com/blog/se
 
 The [handler.go](handler.go) takes a CloudEvent’s data payload and uses it as the arguments for the wrapped [datatype.cob](datatype.cob).
 The example [datatype.cob](datatype.cob) COBOL program takes the passed arguments as variables and does a few trivial operations to the data.
+
 * A message is added to the first argument
 * The second argument is replaced
 * 100 is added to the third argument (float)
@@ -16,11 +17,15 @@ The example [datatype.cob](datatype.cob) COBOL program takes the passed argument
 
 It should be fairly straightforward to upgrade the wrapper and the COBOL application for your own usage.
 
+## COBOL Datatypes
+
+TIP: If you are using COBOL "PIC X(n)" as a receiving parameter, ensure the go code reserves enough space for the parameter otherwise stack corruption will occur.
+
 ## Building and Deploying
 
 Build the docker image with your tag of choice:
 
-    docker build -t mattray/cobolformation .
+    docker build -t mfcobol/cobolformation .
 
 Push to your preferred container registry and update the [ksvc.yaml](ksvc.yaml) with the appropriate image location.
 
@@ -39,8 +44,8 @@ Your COBOL application is now live, you can get the external IP address with
 
 You can test it with `curl`, using an example request like:
 
-```
-curl -D- https://cobolformation.demo.k.triggermesh.net \
+```bash
+  curl -D- https://cobolformation.demo.k.triggermesh.net \
     -H 'Content-Type: application/json' \
     -H 'Ce-Specversion: 1.0' \
     -H 'Ce-Type: greeting' \
@@ -51,30 +56,28 @@ curl -D- https://cobolformation.demo.k.triggermesh.net \
 
 You should get an example response similar to:
 
-```
-HTTP/2 200
-ce-id: 744bcc55-0921-430a-995f-24261a13a521
-ce-processedid: 0000
-ce-processedsource: my-workstation
-ce-processedtype: greeting
-ce-source: io.triggermesh.targets.cobol-sample
-ce-specversion: 1.0
-ce-time: 2021-08-25T04:35:56.031101246Z
-ce-type: com.example.target.ack
-content-length: 179
-content-type: application/json
-date: Wed, 25 Aug 2021 04:35:56 GMT
-x-envoy-upstream-service-time: 5655
-server: istio-envoy
+```http
+HTTP/1.1 200 OK
+Ce-Id: b28011a5-bde3-4ca3-976e-ddbc2a869148
+Ce-Processedid: 0000
+Ce-Processedsource: my-workstation
+Ce-Processedtype: greeting
+Ce-Source: io.triggermesh.targets.mfcobol-sample
+Ce-Specversion: 1.0
+Ce-Time: 2021-09-13T10:07:25.631726589Z
+Ce-Type: com.example.target.ack
+Content-Length: 174
+Content-Type: application/json
+Date: Mon, 13 Sep 2021 10:07:25 GMT
 
-{"code":0,"detail":{"message":"event processed successfully:hello, Replaced in COBOL       ","arg3":223.4499969482422,"arg4":134.56779999999998,"arg5":103,"processing_time_ms":0}}
+{"code":0,"detail":{"message":"event processed successfully: [Hi From Arg1,Replaced in MFCOBOL]","arg3":223.4499969482422,"arg4":134.5678,"arg5":103,"processing_time_ms":24}
 ```
 
 The output could be cleaned up in the wrapper as necessary.
 
 ## Run locally
 
-If you want to run and build it on your workstation, make sure you have [GnuCOBOL](https://gnucobol.sourceforge.io/) installed.
+If you want to run and build it on your workstation, make sure you have *Micro Focus COBOL* installed for example: Visual COBOL
 
 ```
 make run
@@ -82,4 +85,4 @@ make run
 
 ## Author
 
-This was originally written by [Jeff Neff](https://github.com/JeffNeff).
+This was originally written by [Jeff Neff](https://github.com/JeffNeff) for GnuCOBOL and then forked by [Stephen Gennard](https://github.com/triggermesh/cobolformation) for use with Micro Focus COBOL.
