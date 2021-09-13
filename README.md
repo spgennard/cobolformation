@@ -91,7 +91,7 @@ The output could be cleaned up in the wrapper as necessary.
 
 If you want to run and build it on your workstation, make sure you have *Micro Focus COBOL* installed for example: Visual COBOL
 
-```
+```shell
 make run
 ```
 
