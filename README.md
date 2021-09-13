@@ -97,4 +97,6 @@ make run
 
 ## Author
 
-This was originally written by [Jeff Neff](https://github.com/JeffNeff) for GnuCOBOL and then forked by [Stephen Gennard](https://github.com/triggermesh/cobolformation) for use with Micro Focus COBOL.
+This was originally written by [Jeff Neff](https://github.com/JeffNeff) using GnuCOBOL and can be found at [triggermesh/cobolformation](https://github.com/triggermesh/cobolformation).
+
+This is the Micro Focus COBOL version by [Stephen Gennard](https://github.com/triggermesh/cobolformation).
