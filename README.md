@@ -1,4 +1,4 @@
-# GOLANG and COBOL
+# GOLANG and Micro Focus COBOL
 
 COBOLFormation is a Golang wrapper for COBOL applications, allowing them to run within Knative as a serverless application.
 
