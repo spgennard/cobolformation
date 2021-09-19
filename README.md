@@ -99,4 +99,4 @@ make run
 
 This was originally written by [Jeff Neff](https://github.com/JeffNeff) using GnuCOBOL and can be found at [triggermesh/cobolformation](https://github.com/triggermesh/cobolformation).
 
-This is the Micro Focus COBOL version by [Stephen Gennard](https://github.com/triggermesh/cobolformation).
+This is version for Micro Focus COBOL by [Stephen Gennard](https://github.com/triggermesh/cobolformation).
