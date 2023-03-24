@@ -1,7 +1,10 @@
+ARG PRODVER=9.0
+ARG PRODOS=ubuntu22.04
+
 #-----------------------------------------------------------------------------
 # Build the COBOL assets
 #-----------------------------------------------------------------------------
-FROM microfocus/entdevhub:ubuntu20.04_7.0_x64 as cbl-builder
+FROM microfocus/entdevhub:${PRODOS}_${PRODVER}_x64 as cbl-builder
 WORKDIR /cobol
 COPY . /cobol
 RUN . ${MFPRODBASE}/bin/cobsetenv && \
@@ -34,7 +37,7 @@ RUN make clean cobolformation
 #-----------------------------------------------------------------------------
 # Assemble
 #-----------------------------------------------------------------------------
-FROM microfocus/cobolserver:ubuntu20.04_7.0_x64
+FROM microfocus/cobolserver:${PRODOS}_${PRODVER}_x64
 WORKDIR /cobol
 COPY --from=go-builder /cobol/cobolformation /cobol/
 COPY --from=cbl-builder /cobol/datatype.so /cobol/
